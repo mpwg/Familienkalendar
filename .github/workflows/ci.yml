@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build (iOS Simulator + Mac Catalyst)
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build iOS Simulator (Debug)
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project Familienkalendar.xcodeproj \
+            -scheme Familienkalendar \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -quiet \
+            build
+
+      - name: Build Mac Catalyst (Debug)
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project Familienkalendar.xcodeproj \
+            -scheme Familienkalendar \
+            -configuration Debug \
+            -destination 'generic/platform=macOS,variant=Mac Catalyst' \
+            -quiet \
+            build
