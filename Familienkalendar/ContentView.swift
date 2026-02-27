@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Familienkalendar
+//  Familienkalender
 //
 //  Created by Matthias Wallner-Géhri on 27.02.26.
 //
@@ -460,7 +460,7 @@ final class FamilyCalendarViewModel: ObservableObject {
         do {
             let granted = try await eventStore.requestFullAccessToEvents()
             guard granted else {
-                errorMessage = "Kalenderzugriff wurde nicht erlaubt. Bitte in den Systemeinstellungen für Familienkalendar aktivieren."
+                errorMessage = "Kalenderzugriff wurde nicht erlaubt. Bitte in den Systemeinstellungen für Familienkalender aktivieren."
                 return
             }
             let calendars = eventStore.calendars(for: .event)
