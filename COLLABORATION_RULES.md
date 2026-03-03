@@ -1,11 +1,12 @@
 # Collaboration Rules
 
-Stand: 3. Maerz 2026
+Stand: 3. März 2026
 
 ## Verbindliche Regeln
-- Alle Aenderungen werden immer ueber einen Pull Request eingebracht.
+- Alle Änderungen werden immer über einen Pull Request eingebracht.
 - Keine direkten Pushes auf `main`.
-- Neue oder geaenderte Arbeitsregeln werden in dieser Datei dokumentiert.
+- Neue oder geänderte Arbeitsregeln werden in dieser Datei dokumentiert.
+- Deutsche Umlaute (`ä`, `ö`, `ü`, `Ä`, `Ö`, `Ü`, `ß`) werden in Texten verwendet.
 
 ## Zweck
-Diese Datei dient als dauerhafte Referenz fuer verbindliche Zusammenarbeitregeln, damit sie bei kuenftigen Aufgaben konsistent eingehalten werden.
+Diese Datei dient als dauerhafte Referenz für verbindliche Zusammenarbeitsregeln, damit sie bei künftigen Aufgaben konsistent eingehalten werden.
