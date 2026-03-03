@@ -12,7 +12,7 @@ permissions:
 jobs:
   build:
     name: Build (iOS Simulator + Mac Catalyst)
-    runs-on: macos-latest
+    runs-on: macos-26
 
     steps:
       - name: Checkout

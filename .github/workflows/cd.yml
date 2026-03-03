@@ -3,7 +3,7 @@ name: CD
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
 
 permissions:
@@ -12,7 +12,7 @@ permissions:
 jobs:
   release-maccatalyst:
     name: Build and Release Mac Catalyst App
-    runs-on: macos-latest
+    runs-on: macos-26
 
     steps:
       - name: Checkout
