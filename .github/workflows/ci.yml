@@ -26,6 +26,9 @@ jobs:
             -scheme Familienkalendar \
             -configuration Debug \
             -sdk iphonesimulator \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
             -quiet \
             build
 
@@ -37,5 +40,8 @@ jobs:
             -scheme Familienkalendar \
             -configuration Debug \
             -destination 'generic/platform=macOS,variant=Mac Catalyst' \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
             -quiet \
             build

@@ -29,6 +29,9 @@ jobs:
             -configuration Release \
             -destination 'generic/platform=macOS,variant=Mac Catalyst' \
             -derivedDataPath "$DERIVED_DATA" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
             -quiet \
             build
 
