@@ -7,11 +7,16 @@
 
 import SwiftUI
 import EventKit
+import SwiftData
 import Combine
 
 struct ContentView: View {
-    @StateObject private var viewModel = FamilyCalendarViewModel()
+    @StateObject private var viewModel: FamilyCalendarViewModel
     @State private var showSettings = false
+
+    init(modelContext: ModelContext) {
+        _viewModel = StateObject(wrappedValue: FamilyCalendarViewModel(modelContext: modelContext))
+    }
 
     var body: some View {
         ZStack {
@@ -323,9 +328,9 @@ final class FamilyCalendarViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     private let eventStore = EKEventStore()
+    private let remoteFeedStore: RemoteFeedStore
     private var didBootstrap = false
     private let localSelectionKey = "selectedLocalCalendarIDs"
-    private let remoteFeedsKey = "remoteICSFeeds"
     private let palette: [Color] = [
         Color(red: 0.90, green: 0.72, blue: 0.78),
         Color(red: 0.75, green: 0.84, blue: 0.72),
@@ -335,6 +340,10 @@ final class FamilyCalendarViewModel: ObservableObject {
         Color(red: 0.88, green: 0.77, blue: 0.93),
         Color(red: 0.91, green: 0.78, blue: 0.71)
     ]
+
+    init(modelContext: ModelContext) {
+        self.remoteFeedStore = RemoteFeedStore(modelContext: modelContext)
+    }
 
     var columns: [CalendarColumn] {
         let local = localCalendars
@@ -490,9 +499,11 @@ final class FamilyCalendarViewModel: ObservableObject {
             selectedLocalIDs = Set(array)
         }
 
-        if let data = UserDefaults.standard.data(forKey: remoteFeedsKey),
-           let feeds = try? JSONDecoder().decode([RemoteFeed].self, from: data) {
-            remoteFeeds = feeds
+        do {
+            try remoteFeedStore.migrateLegacyIfNeeded()
+            remoteFeeds = try remoteFeedStore.loadFeeds()
+        } catch {
+            errorMessage = "Gespeicherte Feed-Daten konnten nicht geladen werden."
         }
     }
 
@@ -503,8 +514,10 @@ final class FamilyCalendarViewModel: ObservableObject {
     }
 
     private func persistRemoteFeeds() {
-        if let data = try? JSONEncoder().encode(remoteFeeds) {
-            UserDefaults.standard.set(data, forKey: remoteFeedsKey)
+        do {
+            try remoteFeedStore.saveFeeds(remoteFeeds)
+        } catch {
+            errorMessage = "Feed-Änderungen konnten nicht gespeichert werden."
         }
     }
 
